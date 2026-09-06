@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="262" viewBox="0 0 860 262">
+<rect width="100%" height="100%" fill="#0f172a"/>
+<text x="24" y="34" fill="#f8fafc" font-family="sans-serif" font-size="20">Judge accuracy and output coverage</text>
+<text x="24" y="75" fill="#cbd5e1" font-family="monospace" font-size="13">qwen3-4b-judge-v3 / valid accuracy</text>
+<rect x="330" y="58" width="450" height="20" rx="3" fill="#334155"/>
+<rect x="330" y="58" width="192.9" height="20" rx="3" fill="#38bdf8"/>
+<text x="790" y="74" fill="#f8fafc" font-family="monospace" font-size="13">42.9%</text>
+<text x="24" y="107" fill="#cbd5e1" font-family="monospace" font-size="13">qwen3-4b-judge-v3 / output coverage</text>
+<rect x="330" y="90" width="450" height="20" rx="3" fill="#334155"/>
+<rect x="330" y="90" width="393.8" height="20" rx="3" fill="#38bdf8"/>
+<text x="790" y="106" fill="#f8fafc" font-family="monospace" font-size="13">87.5%</text>
+<text x="24" y="139" fill="#cbd5e1" font-family="monospace" font-size="13">qwen3-4b-judge-v4.2 / valid accuracy</text>
+<rect x="330" y="122" width="450" height="20" rx="3" fill="#334155"/>
+<rect x="330" y="122" width="450.0" height="20" rx="3" fill="#38bdf8"/>
+<text x="790" y="138" fill="#f8fafc" font-family="monospace" font-size="13">100.0%</text>
+<text x="24" y="171" fill="#cbd5e1" font-family="monospace" font-size="13">qwen3-4b-judge-v4.2 / output coverage</text>
+<rect x="330" y="154" width="450" height="20" rx="3" fill="#334155"/>
+<rect x="330" y="154" width="450.0" height="20" rx="3" fill="#38bdf8"/>
+<text x="790" y="170" fill="#f8fafc" font-family="monospace" font-size="13">100.0%</text>
+<text x="24" y="203" fill="#cbd5e1" font-family="monospace" font-size="13">qwen3-4b-judge-v4.2 / valid accuracy</text>
+<rect x="330" y="186" width="450" height="20" rx="3" fill="#334155"/>
+<rect x="330" y="186" width="450.0" height="20" rx="3" fill="#38bdf8"/>
+<text x="790" y="202" fill="#f8fafc" font-family="monospace" font-size="13">100.0%</text>
+<text x="24" y="235" fill="#cbd5e1" font-family="monospace" font-size="13">qwen3-4b-judge-v4.2 / output coverage</text>
+<rect x="330" y="218" width="450" height="20" rx="3" fill="#334155"/>
+<rect x="330" y="218" width="281.2" height="20" rx="3" fill="#38bdf8"/>
+<text x="790" y="234" fill="#f8fafc" font-family="monospace" font-size="13">62.5%</text>
+</svg>

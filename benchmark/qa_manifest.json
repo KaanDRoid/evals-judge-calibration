@@ -1,0 +1,13 @@
+{
+  "version": "2026-09-06",
+  "automated_gate": "calibra-eval qa-benchmark",
+  "sets": [
+    {"name": "development", "path": "benchmark/tasks", "tasks": 8, "schema_and_replay_checks": 24, "issues": 0},
+    {"name": "revealed_holdout", "path": "benchmark/holdout_tasks", "tasks": 4, "schema_and_replay_checks": 12, "issues": 0},
+    {"name": "judge_calibration", "path": "benchmark/calibration_tasks", "tasks": 4, "schema_and_replay_checks": 12, "issues": 0},
+    {"name": "final_test", "path": "benchmark/final_test_tasks", "tasks": 4, "schema_and_replay_checks": 12, "issues": 0}
+  ],
+  "total_tasks": 20,
+  "human_policy_review": "not_yet_performed",
+  "interpretation": "Automated QA validates schema and positive/negative executable controls; it does not replace independent human policy review."
+}

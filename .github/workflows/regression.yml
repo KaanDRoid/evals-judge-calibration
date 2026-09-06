@@ -1,0 +1,28 @@
+name: deterministic-regression
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "17 7 * * 1"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - name: Install test dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Run tests and replay evaluation
+        run: bash run_all.sh
+      - name: Preserve evaluation artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: deterministic-eval-artifacts
+          path: |
+            artifacts/demo/
+            artifacts/qa/
