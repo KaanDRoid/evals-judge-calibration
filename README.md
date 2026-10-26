@@ -2,14 +2,17 @@
 
 Calibra Eval is a small, auditable evaluation harness for stateful compliance agents. It tests
 whether an agent verifies identity, checks authorization, limits disclosure scope, resists prompt
-injection, and escalates safely. It combines terminal-state grading with an independently
-calibrated LLM judge for genuinely subjective criteria.
+injection, and escalates safely. It combines executable grading with a separately evaluated LLM
+judge; current judge-reference agreement is not human calibration.
 
-> **Project status:** complete engineering study; human annotation pending. The repository contains
-> 20 automatically QA-validated task definitions across development, revealed holdout, judge-calibration and final
-> test splits; 120 repeated local-model trajectories; a frozen Qwen3 4B judge study; and an executed
-> Harbor/Terminal-Bench 2 smoke. All current reference labels are programmatic or synthetic and are
-> explicitly **not** presented as human–judge agreement.
+> The deterministic suite covers 20 tasks across development, revealed holdout, judge-calibration
+> and final-test splits. The dated reports describe 120 local-model trajectories, a Qwen3 4B judge
+> study and a Harbor/Terminal-Bench 2 smoke test. Judge references are programmatic or synthetic;
+> matched human-reference calibration is still pending.
+>
+> [A-01's annotation notes](reports/2026-10-26_annotation-observation-review.md) contain 9 PASS and
+> 2 UNCERTAIN category-level decisions. The corrected notes explain why these cannot yet be used
+> as a matched calibration dataset. Existing measured scores are unchanged.
 
 ## Why this exists
 
@@ -137,6 +140,12 @@ python -m calibra_eval make-annotation-batch `
 
 The key is intentionally separate and must remain hidden until labels are frozen.
 
+The sheet accepts `pass`, `fail` or `uncertain`, plus confidence (1–5), rationale and an
+`uncertainty_reason` for abstentions. Binary agreement excludes pairs with an abstention and reports
+paired coverage explicitly. Every uncertain case enters adjudication, even if both annotators abstain;
+its confidence and evidence notes are retained. Legacy binary CSVs remain supported. See the
+[annotation rules](calibration/protocol.md#annotation-decision-contract-and-abstentions).
+
 After two annotators independently fill copies, measure agreement and create the adjudication queue:
 
 ```powershell
@@ -171,38 +180,23 @@ reported before adjudication, and model identity will be hidden. The complete pr
 ## Reproducibility and artifacts
 
 Every result is keyed by task, model and run identifier. Raw trajectories and criterion-level grades
-are retained as JSONL. The weekly workflow runs the deterministic regression suite; it does not
-claim to call Ollama on a hosted runner.
+are retained as JSONL.
+
+[`.github/workflows/regression.yml`](.github/workflows/regression.yml) runs the offline suite on
+pushes, pull requests and Mondays at 07:17 UTC. It installs Python 3.12 and test dependencies, runs
+`run_all.sh`, then uploads the generated demo and QA files as workflow artifacts. It does not call
+Ollama, an LLM or an external inference API.
 
 ```bash
 docker build -t calibra-eval .
 docker run --rm calibra-eval
 ```
 
-## Deliverable status
+## Study status
 
-| Deliverable | Status |
-|---|---|
-| 10–20 tasks with prompt/environment/rubric/grader/QA | Complete: 20 tasks |
-| Three local models, five seeds per task | Complete: 120 trajectories |
-| Variance, confidence interval and accuracy-vs-κ demonstration | Complete |
-| Judge prompt iterations, frozen calibration and final test | Complete |
-| Failure taxonomy, prevalence and causal recommendations | Complete |
-| Blinded sampling and two-annotator adjudication tooling | Complete |
-| Real independent human labels | Pending external annotators; never fabricated |
-| Harbor standard benchmark smoke and limitations | Complete |
-| One-command tests, Docker and weekly CI | Complete |
-
-## Role alignment
-
-- End-to-end eval pipeline: task loading → agent → stateful tools → trajectory → executable grader.
-- Judge calibration: per-class P/R/F1, balanced accuracy, κ, MCC, bootstrap interval, drift slices,
-  output coverage, blinded annotation and adjudication.
-- Benchmark extension: happy paths, edge cases, adversarial tasks, private oracle, replays and QA.
-- Failure analysis: model, adapter, prompt, judge, environment and benchmark layers are separated.
-- Recurring workflow: deterministic CI runs on push, pull request and a weekly schedule.
-- Framework experience: Harbor 0.22.0 executed against registered Terminal-Bench 2 with positive and
-  negative controls; opinions are documented in [harbor/run_notes.md](harbor/run_notes.md).
+Task definitions, replay controls, local-model studies and judge experiments are documented in the
+reports above. Blinded sampling and adjudication tools are available. Matched independent human
+labels are still pending; the A-01 notes do not replace that dataset.
 
 ## Repository map
 

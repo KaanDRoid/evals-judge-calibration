@@ -404,9 +404,13 @@ def main(argv: list[str] | None = None) -> int:
         report = annotation_agreement(
             args.annotator_a, args.annotator_b, args.output, args.disagreements
         )
+        accuracy = "undefined" if report["accuracy"] is None else f"{report['accuracy']:.3f}"
+        kappa = "undefined" if report["cohen_kappa"] is None else f"{report['cohen_kappa']:.3f}"
         print(
-            f"Human-human agreement={report['accuracy']:.3f}; "
-            f"kappa={report['cohen_kappa']:.3f}; disagreements={report['disagreements']}"
+            f"Human-human agreement={accuracy}; kappa={kappa}; "
+            f"binary_pairs={report['n']}/{report['total_decisions']}; "
+            f"disagreements={report['disagreements']}; "
+            f"adjudication_required={report['adjudication_required']}"
         )
         return 0
     if args.command == "render-charts":

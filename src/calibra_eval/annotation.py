@@ -19,6 +19,8 @@ ANNOTATION_FIELDS = [
     "terminal_state_json",
     "annotator_id",
     "label",
+    "confidence",
+    "uncertainty_reason",
     "failure_mode",
     "rationale",
 ]
@@ -156,6 +158,8 @@ def make_annotation_batch(
                 "terminal_state_json": _compact_json(trajectory.final_state),
                 "annotator_id": "",
                 "label": "",
+                "confidence": "",
+                "uncertainty_reason": "",
                 "failure_mode": "",
                 "rationale": "",
             }
