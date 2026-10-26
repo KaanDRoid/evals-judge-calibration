@@ -91,11 +91,10 @@ Backward compatibility here means accepting legacy binary CSV inputs. Report con
 null kappa for identical single-class annotations and additional adjudication CSV columns.
 
 Every metric-ready label must map through its `decision_id` to an exact frozen trajectory and task
-version via the hidden key. A narrative summary without that mapping is qualitative intake, not
-an expert-reference dataset. Record any prior exposure to aggregate judge reports as a potential
-expectation bias; do not invent second-annotator decisions or estimate kappa from anticipated labels.
-The supplied A-01 report and its evidence limits are documented in the
-[observation review](../reports/2026-10-26_annotation-observation-review.md).
+version via the hidden key. A category summary without that mapping is a qualitative observation,
+not an expert-reference dataset. Record any prior exposure to aggregate judge reports as a potential
+expectation bias. Agreement statistics require actual paired labels from both annotators.
+See the [A-01 notes](../reports/2026-10-26_annotation-observation-review.md) for the current evidence limits.
 
 ## 4. Run judges without leakage
 

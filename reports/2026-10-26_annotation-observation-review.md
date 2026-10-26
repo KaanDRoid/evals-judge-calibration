@@ -1,26 +1,21 @@
-# A-01 observation intake and methodological review
+# A-01 annotation notes
 
-Review date: 2026-10-26. Submitted report date: 2026-09-12 (self-reported, not independently verified).
+Reviewed: 2026-10-26. Initial note date: 2026-09-12, as recorded in the report.
 
-## Evidence status
+## Scope
 
-The repository owner supplied a narrative annotation report identifying its annotator as A-01.
-The original Turkish submission is preserved unchanged in
-[observations/2026-09-12_A-01-submitted.txt](observations/2026-09-12_A-01-submitted.txt).
-It contains eleven category-level decisions, confidence scores and rationales, but no blinded
-`decision_id`, batch/key, trajectory evidence or frozen label files. These are **submitted qualitative
-observations**, not yet auditable trajectory-level expert reference labels or adjudicated ground truth.
-We cannot verify the claimed blinding, independence, exact split membership or decision-to-run mapping.
-The title mentions holdout/final test, but the category list spans concepts in several splits. Category
-names must not be used to guess which trajectory was reviewed.
+The [Turkish notes](observations/2026-09-12_A-01-submitted.txt) have been revised to correct the
+scope, grader and agreement claims. Git history retains the earlier version. The eleven
+category-level decisions and confidence scores are unchanged, but no decision IDs, batch/key
+files or source trajectories are attached. The notes are not included in calibration data.
 
-No benchmark scores, existing judge statistics, frozen tasks or safety thresholds are changed by
-this intake. No A-02 labels or judge predictions have been invented. The submission is deliberately
-not placed in a calibration CSV or consumed by the metrics pipeline.
+Split membership, blinding and the decision-to-run mapping cannot be checked from the category
+descriptions. Prior knowledge of the public v3 report is recorded as a possible source of
+expectation bias. Benchmark scores, frozen tasks, grader rules and judge prompts are unchanged.
 
-## What the submission actually records
+## Decisions
 
-| Submitted label | Count | Share of eleven entries |
+| Label | Count | Share |
 |---|---:|---:|
 | PASS | 9 | 81.8% |
 | FAIL | 0 | 0.0% |
@@ -31,9 +26,9 @@ resolved subset contains nine PASS decisions and no FAIL decisions. Its apparent
 must be reported with 9/11 resolved coverage, not treated as a population estimate. Neither this
 summary nor the informal 70–80% claim estimates performance on the 120-trajectory model study.
 
-## Findings: useful observations versus unsupported conclusions
+## Interpretation
 
-### 1. Separate safety, completion and communication
+### 1. Safety, completion and communication
 
 The concern about conflating dimensions is useful. A trajectory may avoid disclosure yet fail to
 perform required verification, authorization or escalation. Intention, narrated tool calls, successful
@@ -55,7 +50,7 @@ tools. These published findings were inspected, not rerun during this review; th
 artifacts are not tracked in the public checkout.
 
 A human considering an attempted action reasonable does not establish successful execution.
-The submission therefore does not show that grader strictness caused the 0/120 outcome, or that
+The notes do not show that grader strictness caused the 0/120 outcome, or that
 regrading those same runs would produce 70–80% success. That remains a hypothesis requiring matched
 run-level evidence. The study already distinguishes blocked unsafe attempts from completed tasks.
 
@@ -106,22 +101,21 @@ There is no observed A-02 comparison, so neither a human-human kappa of 0.55–0
 expectations even if individual predictions and model IDs were hidden. Record that exposure rather
 than asserting fully verified blinding.
 
-## Implemented response and next evidence gate
+## Annotation workflow
 
-- Annotation sheets now include `confidence` (1–5) and `uncertainty_reason`.
-- `annotation-agreement` accepts `uncertain` without coercion into PASS or FAIL. Binary metrics use
-  only pairs where both annotators resolved the decision; total decisions, paired coverage and each
-  annotator's uncertainty count remain visible. This is not three-class kappa.
-- Every uncertain decision enters adjudication, including UNCERTAIN/UNCERTAIN pairs. The queue
-  preserves both rationales, confidence scores and uncertainty reasons. Disagreement count and
-  adjudication queue length are reported separately.
-- With no binary pairs, metrics are null, not fabricated zeros. Identical single-class binary labels
-  have undefined kappa in the annotation report. These changes do not rewrite historical judge metrics.
+Sheets include `confidence` (1–5) and `uncertainty_reason`. `annotation-agreement` accepts
+`uncertain`, reports each annotator's uncertainty count and computes binary agreement only where
+both labels are resolved. It reports paired coverage alongside the metrics. Every uncertain case
+enters adjudication, including UNCERTAIN/UNCERTAIN; both rationales and confidence scores remain
+in the queue. Disagreement count and queue length are separate fields.
 
-To promote this submission into usable reference data: recover the original batch and hidden key;
-map each frozen decision to its exact trajectory/version; attach event or response evidence; record
-prior report exposure; obtain independent A-02 labels on the same decisions; report pre-adjudication
-agreement and abstention coverage; adjudicate while preserving both originals. If the batch cannot be
-recovered, retain this document as qualitative feedback and label a new blinded batch rather than
-retrofitting category-level decisions onto guessed runs. Any rubric or judge revision after inspection
-requires a new evaluation set, not tuning on the revealed final test.
+No binary pairs means null metrics. Identical single-class binary labels mean null kappa. Legacy
+binary CSV inputs remain supported, but report consumers must allow null kappa and the additional
+queue columns. Historical judge metrics and bootstrap conventions are unchanged; small-sample
+intervals can still include degenerate resamples.
+
+To use these decisions as references, recover the original batch and hidden key, attach the exact
+trajectory/task versions and cite the events behind each label. Collect independent A-02 labels on
+the same decisions, report agreement before adjudication, then resolve disagreements while keeping
+the original labels. If the mapping is unavailable, keep these as qualitative notes and annotate a
+new batch. Any rubric or judge changes need a new test set after the previous one has been inspected.
