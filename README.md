@@ -2,14 +2,19 @@
 
 Calibra Eval is a small, auditable evaluation harness for stateful compliance agents. It tests
 whether an agent verifies identity, checks authorization, limits disclosure scope, resists prompt
-injection, and escalates safely. It combines terminal-state grading with an independently
-calibrated LLM judge for genuinely subjective criteria.
+injection, and escalates safely. It combines executable grading with a separately evaluated LLM
+judge; current judge-reference agreement is not human calibration.
 
-> **Project status:** complete engineering study; human annotation pending. The repository contains
+> **Project status:** engineering study implemented; auditable trajectory-level human annotation pending. The repository contains
 > 20 automatically QA-validated task definitions across development, revealed holdout, judge-calibration and final
 > test splits; 120 repeated local-model trajectories; a frozen Qwen3 4B judge study; and an executed
 > Harbor/Terminal-Bench 2 smoke. All current reference labels are programmatic or synthetic and are
 > explicitly **not** presented as human–judge agreement.
+>
+> **Observation intake (2026-10-26):** an owner-supplied A-01 narrative records 9 PASS and 2 UNCERTAIN
+> category-level decisions. The original and a [methodological review](reports/2026-10-26_annotation-observation-review.md)
+> are preserved. Missing decision IDs, source trajectories and independent second labels prevent
+> treating it as a matched human-calibration dataset; existing measured scores remain unchanged.
 
 ## Why this exists
 
@@ -136,6 +141,12 @@ python -m calibra_eval make-annotation-batch `
 ```
 
 The key is intentionally separate and must remain hidden until labels are frozen.
+
+The sheet accepts `pass`, `fail` or `uncertain`, plus confidence (1–5), rationale and an
+`uncertainty_reason` for abstentions. Binary agreement excludes pairs with an abstention and reports
+paired coverage explicitly. Every uncertain case enters adjudication, even if both annotators abstain;
+its confidence and evidence notes are retained. Legacy binary CSVs remain supported. See the
+[annotation rules](calibration/protocol.md#annotation-decision-contract-and-abstentions).
 
 After two annotators independently fill copies, measure agreement and create the adjudication queue:
 

@@ -41,6 +41,8 @@ def test_annotation_batch_is_blinded_and_reproducible(tmp_path: Path) -> None:
         rows = list(csv.DictReader(handle))
     assert list(rows[0]) == ANNOTATION_FIELDS
     assert rows[0]["label"] == ""
+    assert rows[0]["confidence"] == ""
+    assert rows[0]["uncertainty_reason"] == ""
     assert "secret-model" not in sheet.read_text(encoding="utf-8")
     assert "secret-run" not in sheet.read_text(encoding="utf-8")
     assert "oracle" not in sheet.read_text(encoding="utf-8").lower()
